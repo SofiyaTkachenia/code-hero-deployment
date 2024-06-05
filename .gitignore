@@ -1,1 +1,3 @@
 .idea
+/development/.terraform
+/development/.terraform.lock.hcl
