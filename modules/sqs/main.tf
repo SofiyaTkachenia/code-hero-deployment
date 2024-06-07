@@ -8,7 +8,7 @@ resource "aws_sqs_queue" "this" {
   receive_wait_time_seconds = var.receive_wait_time_seconds
 
   tags = {
-    Name        = var.base_queue_name}
+    Name        = var.base_queue_name
     Environment = var.env_name
   }
 }
