@@ -1,7 +1,7 @@
 #======S3Bucket==================================================
 
 resource "aws_s3_bucket" "this" {
-  bucket = "${var.base_name}-s3-bucket"
+  bucket = "${var.base_name}-${var.env_name}"
 
   tags = {
     Name        = var.base_name
