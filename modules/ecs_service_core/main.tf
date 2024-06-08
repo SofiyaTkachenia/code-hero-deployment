@@ -1,3 +1,4 @@
+
 #======CloudWatch==================================================
 
 resource "aws_cloudwatch_log_group" "this" {
@@ -8,67 +9,61 @@ resource "aws_cloudwatch_log_group" "this" {
 #======IAM=========================================================
 
 ##=====TaskExecutionRole===========================================
-resource "aws_iam_role" "executionRole" {
-  name = "${var.base_name}-ecs-task-execution-role"
+resource "aws_iam_role" "ecs_agent_role" {
+  name = "${var.base_name}-ecs-agent-role-${var.env_name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_role_assume.json
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment" {
-  role       = aws_iam_role.executionRole.name
+  role       = aws_iam_role.ecs_agent_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 
 ##=====TaskRole====================================================
-resource "aws_iam_role" "taskRole" {
-  name = "${var.base_name}-ecs-task-role"
+resource "aws_iam_role" "task_role" {
+  name = "${var.base_name}-ecs-task-role-${var.env_name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_role_assume.json
 }
 
 resource "aws_iam_policy" "ecs_sqs_task_role_policy" {
-  name        = "${var.base_name}-sqs-policy"
-  policy =    data.aws_iam_policy_document.ecs_sqs_task_role_policy.json
+  name        = "${var.base_name}-ecs-task-role-policy-${var.env_name}"
+  policy      = var.ecs_task_role_policy
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
-  role       = aws_iam_role.taskRole.name
+  role       = aws_iam_role.task_role.name
   policy_arn = aws_iam_policy.ecs_sqs_task_role_policy.arn
-}
-
-resource "aws_iam_role_policy_attachment" "ecs_xray_role_policy_attachment" {
-  role       = aws_iam_role.taskRole.name
-  policy_arn = "arn:aws:iam::aws:policy/AWSXrayFullAccess"
 }
 
 #======ECS=========================================================
 resource "aws_ecs_task_definition" "this" {
   network_mode = "awsvpc"
-  family = "${var.base_name}-${var.env_name}-task-definition"
+  family = "${var.base_name}-${var.env_name}"
   cpu = var.vcpus
   memory = var.memory_mb
-  requires_compatibilities = ["FARGATE"]
 
   runtime_platform {
-    cpu_architecture        = "ARM64"
+    cpu_architecture        = var.cpu_architecture
     operating_system_family = "LINUX"
   }
 
-  task_role_arn      = aws_iam_role.taskRole.arn
-  execution_role_arn = aws_iam_role.executionRole.arn
+  task_role_arn      = aws_iam_role.task_role.arn
+  execution_role_arn = aws_iam_role.ecs_agent_role.arn
 
   container_definitions = jsonencode([
     {
-      name = "${var.base_name}-${var.env_name}",
+      name = var.container_name,
       image  = var.task_ecr_image_uri,
       cpu = 0
       essential = true,
-      portMappings = [
+      portMappings = var.including_port_mappings ? [
         {
           containerPort = var.task_container_port,
           hostPort      = var.task_host_port,
-          protocol      = "tcp",
+          protocol      = "tcp"
         }
-      ],
+      ] : []
       logConfiguration = {
         logDriver = "awslogs",
         options = {
@@ -76,20 +71,16 @@ resource "aws_ecs_task_definition" "this" {
           "awslogs-group"           = aws_cloudwatch_log_group.this.name,
           "awslogs-region"          = var.aws_region
           "awslogs-stream-prefix"   = "ecs",
-          "awslogs-create-group"    = "true",
+          "awslogs-create-group"    = "false",
         }
       },
     },
     {
-      name = "${var.base_name}-sidecar-container",
+      name = "${var.base_name}-sidecar-container-${var.env_name}",
       image = var.sidecar_container_image,
+      cpu = var.vcpu_sidecar,
+      memory = var.memory_mb_sidecar,
       essential = false,
-      portMappings = [
-        {
-          containerPort = var.sidecar_container_container_port,
-          hostPort      = var.sidecar_container_host_port
-        }
-      ],
       logConfiguration = {
         logDriver = "awslogs",
         options = {
@@ -97,17 +88,15 @@ resource "aws_ecs_task_definition" "this" {
           "awslogs-group"           = aws_cloudwatch_log_group.this.name,
           "awslogs-region"          = var.aws_region
           "awslogs-stream-prefix"   = "ecs",
-          "awslogs-create-group"    = "true",
+          "awslogs-create-group"    = "false",
         }
       }
     }
   ])
 }
 
-resource "aws_ecs_service" "aws-ecs-service" {
-  depends_on = [var.aws_lb_listener_arn]
-
-  name                 = "${var.base_name}-${var.env_name}-ecs-service"
+resource "aws_ecs_service" "aws_ecs_service" {
+  name                 = "${var.base_name}-${var.env_name}"
   cluster              = var.cluster_arn
   task_definition      = aws_ecs_task_definition.this.arn
   desired_count        = 1
@@ -119,35 +108,13 @@ resource "aws_ecs_service" "aws-ecs-service" {
     assign_public_ip = false
   }
 
-  load_balancer {
-    target_group_arn = var.aws_lb_target_group_arn
-    container_name   = "${var.base_name}-${var.env_name}"
-    container_port   = var.task_container_port
-  }
-}
-
-resource "aws_appautoscaling_target" "ecs_target" {
-  max_capacity       = 3
-  min_capacity       = 1
-  resource_id        = "service/${var.cluster_id}/${aws_ecs_service.aws-ecs-service.name}"
-  scalable_dimension = "ecs:service:DesiredCount"
-  service_namespace  = "ecs"
-}
-
-resource "aws_appautoscaling_policy" "ecs_policy_alb_request_count_per_target" {
-  name               = "${var.base_name}-${var.env_name}-cpu-auto-scaling"
-  policy_type        = "TargetTrackingScaling"
-  resource_id        = aws_appautoscaling_target.ecs_target.resource_id
-  scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
-  service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
-
-  target_tracking_scaling_policy_configuration {
-    predefined_metric_specification {
-      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+  dynamic "load_balancer" {
+    for_each = var.include_load_balancer ? [1] : []
+    content {
+      target_group_arn = var.aws_lb_target_group_arn
+      container_name   = "${var.base_name}-${var.env_name}"
+      container_port   = var.task_container_port
     }
-    target_value      = 70
-    scale_in_cooldown  = 300
-    scale_out_cooldown = 300
   }
 }
 

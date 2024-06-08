@@ -15,14 +15,6 @@ variable "cloud_watch_retention_days" {
   type = number
 }
 
-variable "sqs_queue_for_pulling_messages" {
-  type = string
-}
-
-variable "sqs_queue_for_pushing_messages" {
-  type = string
-}
-
 variable "vcpus" {
   type = number
 }
@@ -55,19 +47,11 @@ variable "sidecar_container_host_port" {
   type = number
 }
 
-variable "aws_lb_listener_arn" {
-  type = string
-}
-
 variable "aws_lb_target_group_arn" {
   type = string
 }
 
 variable "cluster_arn" {
-  type = string
-}
-
-variable "cluster_id" {
   type = string
 }
 
@@ -77,4 +61,33 @@ variable "ecs_subnets" {
 
 variable "ecs_security_group" {
   type    = list(string)
+}
+
+variable "ecs_task_role_policy" {
+  type    = string
+}
+
+variable "cpu_architecture" {
+  type = string
+}
+
+variable "container_name" {
+  type = string
+  default = "essentials"
+}
+
+variable "including_port_mappings" {
+  type = bool
+}
+
+variable "vcpu_sidecar" {
+  type = number
+}
+
+variable "memory_mb_sidecar" {
+  type = number
+}
+
+variable "include_load_balancer" {
+  type = bool
 }

@@ -27,10 +27,6 @@ variable "cloud_watch_retention_days" {
   type = number
 }
 
-variable "aws_lb_listener_arn" {
-  type = string
-}
-
 variable "cluster_arn" {
   type = string
 }
@@ -83,4 +79,18 @@ variable "aws_lb_target_group_arn" {
   type = string
 }
 
+variable "cpu_architecture" {
+  type = string
+}
 
+variable "including_port_mappings" {
+  type = bool
+}
+
+variable "vcpu_sidecar" {
+  type = number
+}
+
+variable "memory_mb_sidecar" {
+  type = number
+}
