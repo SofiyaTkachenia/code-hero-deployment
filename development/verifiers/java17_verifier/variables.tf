@@ -108,7 +108,7 @@ variable "load_balancer_subnets" {
 }
 
 variable "load_balancer_security_group" {
-  type = list(string)
+  type = string
 }
 
 variable "health_check_timeout" {
