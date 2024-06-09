@@ -70,8 +70,7 @@ resource "aws_ecs_task_definition" "this" {
           "awslogs-datetime-format" = "%Y-%m-%d %H:%M:%S%L",
           "awslogs-group"           = aws_cloudwatch_log_group.this.name,
           "awslogs-region"          = var.aws_region
-          "awslogs-stream-prefix"   = "ecs",
-          "awslogs-create-group"    = "false",
+          "awslogs-stream-prefix"   = "ecs"
         }
       },
     },
@@ -87,8 +86,7 @@ resource "aws_ecs_task_definition" "this" {
           "awslogs-datetime-format" = "%Y-%m-%d %H:%M:%S%L",
           "awslogs-group"           = aws_cloudwatch_log_group.this.name,
           "awslogs-region"          = var.aws_region
-          "awslogs-stream-prefix"   = "ecs",
-          "awslogs-create-group"    = "false",
+          "awslogs-stream-prefix"   = "ecs"
         }
       }
     }
@@ -112,7 +110,7 @@ resource "aws_ecs_service" "aws_ecs_service" {
     for_each = var.include_load_balancer ? [1] : []
     content {
       target_group_arn = var.aws_lb_target_group_arn
-      container_name   = "${var.base_name}-${var.env_name}"
+      container_name   = var.container_name
       container_port   = var.task_container_port
     }
   }

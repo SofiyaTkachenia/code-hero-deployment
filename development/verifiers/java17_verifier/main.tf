@@ -57,7 +57,7 @@ module "java17_verifier_ecs_service" {
   cloud_watch_retention_days = var.cloud_watch_retention_days
   base_name = var.base_name
   env_name = var.env_name
-  aws_lb_target_group_arn = var.aws_lb_target_group_arn
+  aws_lb_target_group_arn = module.load_balancer_target_group.target_group_arn
   cluster_arn = var.cluster_arn
   ecs_security_group = var.ecs_security_group
   ecs_task_role_policy = data.aws_iam_policy_document.ecs_task_role_policy.json

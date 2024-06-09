@@ -75,10 +75,6 @@ variable "ecs_security_group" {
   type    = list(string)
 }
 
-variable "aws_lb_target_group_arn" {
-  type = string
-}
-
 variable "cpu_architecture" {
   type = string
 }
