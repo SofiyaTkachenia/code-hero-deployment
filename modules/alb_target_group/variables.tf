@@ -27,7 +27,7 @@ variable "load_balancer_target_group_threshold" {
 }
 
 variable "load_balancer_health_check_interval" {
-  type = number
+  type = string
 }
 
 variable "load_balancer_target_group_unhealthy_threshold" {
