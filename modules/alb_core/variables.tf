@@ -6,6 +6,10 @@ variable "base_name" {
   type = string
 }
 
+variable "is_load_balancer_internal" {
+  type = bool
+}
+
 variable "load_balancer_type" {
   type = string
 }
