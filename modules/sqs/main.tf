@@ -1,5 +1,3 @@
-#======SQS==================================================
-
 resource "aws_sqs_queue" "this" {
   name = "${var.base_queue_name}-${var.env_name}"
   delay_seconds             = var.delay_seconds

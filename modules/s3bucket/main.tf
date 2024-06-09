@@ -1,5 +1,3 @@
-#======S3Bucket==================================================
-
 resource "aws_s3_bucket" "this" {
   bucket = "${var.base_name}-${var.env_name}"
 
