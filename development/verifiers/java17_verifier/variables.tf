@@ -150,3 +150,75 @@ variable "load_balancer_target_group_type" {
 variable "vpc_id" {
   type = string
 }
+
+variable "alarm_base_name" {
+  type = string
+}
+
+variable "comparison_operator" {
+  type = string
+}
+
+variable "evaluation_periods" {
+  type = number
+}
+
+variable "metric_name" {
+  type = string
+}
+
+variable "statistic_period" {
+  type = number
+}
+
+variable "statistic_type" {
+  type = string
+}
+
+variable "threshold" {
+  type = number
+}
+
+variable "max_capacity" {
+  type = number
+}
+
+variable "min_capacity" {
+  type = number
+}
+
+variable "policy_type" {
+  type = string
+}
+
+variable "adjustment_type" {
+  type = string
+}
+
+variable "coooldown" {
+  type = number
+}
+
+variable "metric_aggregation_type" {
+  type = string
+}
+
+variable "alarm_namespace" {
+  type = string
+}
+
+variable "dynamic_step_adjustments" {
+  type = list(object({
+    scaling_adjustment            = number
+    metric_interval_lower_bound    = number
+    metric_interval_upper_bound    = number
+  }))
+}
+
+variable "max_containers" {
+  type = number
+}
+
+variable "max_messages_in_the_queue" {
+  type = number
+}
