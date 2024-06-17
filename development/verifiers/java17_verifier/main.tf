@@ -73,6 +73,7 @@ module "java17_verifier_ecs_service" {
   include_load_balancer = true
   memory_mb_sidecar = var.memory_mb_sidecar
   vcpu_sidecar = var.vcpu_sidecar
+  desired_count           = var.desired_count
 }
 
 module "java17_ecs_service_autoscaling" {

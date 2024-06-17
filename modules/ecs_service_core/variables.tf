@@ -83,3 +83,7 @@ variable "memory_mb_sidecar" {
 variable "include_load_balancer" {
   type = bool
 }
+
+variable "desired_count" {
+  type = number
+}

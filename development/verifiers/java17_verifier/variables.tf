@@ -214,3 +214,7 @@ variable "max_containers" {
 variable "max_messages_in_the_queue" {
   type = number
 }
+
+variable "desired_count" {
+  type = number
+}
