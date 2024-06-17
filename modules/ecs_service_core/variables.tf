@@ -39,14 +39,6 @@ variable "sidecar_container_image" {
   type = string
 }
 
-variable "sidecar_container_container_port" {
-  type = number
-}
-
-variable "sidecar_container_host_port" {
-  type = number
-}
-
 variable "aws_lb_target_group_arn" {
   type = string
 }

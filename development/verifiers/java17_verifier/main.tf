@@ -62,8 +62,6 @@ module "java17_verifier_ecs_service" {
   ecs_security_group = var.ecs_security_group
   ecs_task_role_policy = data.aws_iam_policy_document.ecs_task_role_policy.json
   ecs_subnets = var.ecs_subnets
-  sidecar_container_container_port = var.sidecar_container_container_port
-  sidecar_container_host_port = var.sidecar_container_host_port
   sidecar_container_image = var.sidecar_container_image
   task_container_port = var.task_container_port
   task_host_port = var.task_host_port
