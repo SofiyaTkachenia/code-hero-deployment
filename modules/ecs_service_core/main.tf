@@ -2,7 +2,7 @@
 #======CloudWatch==================================================
 
 resource "aws_cloudwatch_log_group" "this" {
-  name = "/aws/ecs/${var.base_name}-${var.env_name}"
+  name              = "/aws/ecs/${var.base_name}-${var.env_name}"
   retention_in_days = var.cloud_watch_retention_days
 }
 
@@ -10,7 +10,7 @@ resource "aws_cloudwatch_log_group" "this" {
 
 ##=====TaskExecutionRole===========================================
 resource "aws_iam_role" "ecs_agent_role" {
-  name = "${var.base_name}-ecs-agent-role-${var.env_name}"
+  name               = "${var.base_name}-ecs-agent-role-${var.env_name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_role_assume.json
 }
 
@@ -22,13 +22,13 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach
 
 ##=====TaskRole====================================================
 resource "aws_iam_role" "task_role" {
-  name = "${var.base_name}-ecs-task-role-${var.env_name}"
+  name               = "${var.base_name}-ecs-task-role-${var.env_name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_role_assume.json
 }
 
 resource "aws_iam_policy" "ecs_sqs_task_role_policy" {
-  name        = "${var.base_name}-ecs-task-role-policy-${var.env_name}"
-  policy      = var.ecs_task_role_policy
+  name   = "${var.base_name}-ecs-task-role-policy-${var.env_name}"
+  policy = var.ecs_task_role_policy
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
@@ -39,9 +39,9 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
 #======ECS=========================================================
 resource "aws_ecs_task_definition" "this" {
   network_mode = "awsvpc"
-  family = "${var.base_name}-${var.env_name}"
-  cpu = var.vcpus
-  memory = var.memory_mb
+  family       = "${var.base_name}-${var.env_name}"
+  cpu          = var.vcpus
+  memory       = var.memory_mb
 
   runtime_platform {
     cpu_architecture        = var.cpu_architecture
@@ -53,9 +53,9 @@ resource "aws_ecs_task_definition" "this" {
 
   container_definitions = jsonencode([
     {
-      name = var.container_name,
-      image  = var.task_ecr_image_uri,
-      cpu = 0
+      name      = var.container_name,
+      image     = var.task_ecr_image_uri,
+      cpu       = 0
       essential = true,
       portMappings = var.including_port_mappings ? [
         {
@@ -75,10 +75,10 @@ resource "aws_ecs_task_definition" "this" {
       },
     },
     {
-      name = "${var.base_name}-sidecar-container-${var.env_name}",
-      image = var.sidecar_container_image,
-      cpu = var.vcpu_sidecar,
-      memory = var.memory_mb_sidecar,
+      name      = "${var.base_name}-sidecar-container-${var.env_name}",
+      image     = var.sidecar_container_image,
+      cpu       = var.vcpu_sidecar,
+      memory    = var.memory_mb_sidecar,
       essential = false,
       logConfiguration = {
         logDriver = "awslogs",
@@ -94,11 +94,11 @@ resource "aws_ecs_task_definition" "this" {
 }
 
 resource "aws_ecs_service" "aws_ecs_service" {
-  name                 = "${var.base_name}-${var.env_name}"
-  cluster              = var.cluster_arn
-  task_definition      = aws_ecs_task_definition.this.arn
-  desired_count        = var.desired_count
-  launch_type          = "FARGATE"
+  name            = "${var.base_name}-${var.env_name}"
+  cluster         = var.cluster_arn
+  task_definition = aws_ecs_task_definition.this.arn
+  desired_count   = var.desired_count
+  launch_type     = "FARGATE"
 
   network_configuration {
     subnets          = var.ecs_subnets

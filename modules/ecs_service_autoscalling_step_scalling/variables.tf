@@ -40,9 +40,9 @@ variable "metric_aggregation_type" {
 
 variable "dynamic_step_adjustments" {
   type = list(object({
-    scaling_adjustment            = number
-    metric_interval_lower_bound    = number
-    metric_interval_upper_bound    = number
+    scaling_adjustment          = number
+    metric_interval_lower_bound = number
+    metric_interval_upper_bound = number
   }))
 }
 

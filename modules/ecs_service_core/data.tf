@@ -10,6 +10,3 @@ data "aws_iam_policy_document" "ecs_tasks_role_assume" {
     }
   }
 }
-
-
-

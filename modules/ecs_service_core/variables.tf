@@ -1,5 +1,5 @@
 variable "aws_region" {
-  type = string
+  type    = string
   default = "eu-central-1"
 }
 
@@ -48,15 +48,15 @@ variable "cluster_arn" {
 }
 
 variable "ecs_subnets" {
-  type    = list(string)
+  type = list(string)
 }
 
 variable "ecs_security_group" {
-  type    = list(string)
+  type = list(string)
 }
 
 variable "ecs_task_role_policy" {
-  type    = string
+  type = string
 }
 
 variable "cpu_architecture" {
@@ -64,7 +64,7 @@ variable "cpu_architecture" {
 }
 
 variable "container_name" {
-  type = string
+  type    = string
   default = "essentials"
 }
 

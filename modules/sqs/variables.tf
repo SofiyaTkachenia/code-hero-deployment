@@ -15,16 +15,16 @@ variable "delay_seconds" {
 }
 
 variable "max_message_size" {
-  type = number
+  type    = number
   default = 2048
 }
 
 variable "message_retention_seconds" {
-  type = number
+  type    = number
   default = 86400
 }
 
 variable "receive_wait_time_seconds" {
-  type = number
+  type    = number
   default = 10
 }

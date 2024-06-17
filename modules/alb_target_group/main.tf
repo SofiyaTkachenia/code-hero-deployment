@@ -29,7 +29,7 @@ resource "aws_lb_listener" "this" {
 
 resource "aws_lb_listener_rule" "this" {
   listener_arn = aws_lb_listener.this.arn
-  priority = var.load_balancer_listener_priority
+  priority     = var.load_balancer_listener_priority
 
   action {
     type             = "forward"
