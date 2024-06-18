@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "this" {
   container_definitions = jsonencode([
     {
       name      = var.container_name,
-      image     = var.task_ecr_image_uri,
+      image     = var.image_uri,
       cpu       = 0
       essential = true,
       portMappings = var.port_mappings
@@ -70,7 +70,7 @@ resource "aws_ecs_task_definition" "this" {
     },
     {
       name      = "${var.base_name}-sidecar-container-${var.env_name}",
-      image     = var.sidecar_container_image,
+      image     = var.sidecar_image_uri,
       cpu       = var.vcpu_sidecar,
       memory    = var.memory_mb_sidecar,
       essential = false,

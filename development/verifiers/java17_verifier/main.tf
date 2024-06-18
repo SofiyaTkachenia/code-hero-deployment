@@ -67,8 +67,8 @@ module "java17_verifier_ecs_service" {
   ecs_security_group         = var.ecs_security_group
   ecs_task_role_policy       = data.aws_iam_policy_document.ecs_task_role_policy.json
   ecs_subnets                = var.ecs_subnets
-  sidecar_container_image    = var.sidecar_container_image
-  task_ecr_image_uri         = var.task_ecr_image_uri
+  sidecar_image_uri          = var.sidecar_image_uri
+  image_uri                  = var.image_uri
   memory_mb                  = var.memory_mb
   vcpus                      = var.vcpus
   cpu_architecture           = var.cpu_architecture

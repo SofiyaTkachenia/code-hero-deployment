@@ -35,7 +35,7 @@ variable "cluster_id" {
   type = string
 }
 
-variable "task_ecr_image_uri" {
+variable "image_uri" {
   type = string
 }
 
@@ -47,7 +47,7 @@ variable "vcpus" {
   type = number
 }
 
-variable "sidecar_container_image" {
+variable "sidecar_image_uri" {
   type = string
 }
 

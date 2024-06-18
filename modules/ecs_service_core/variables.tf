@@ -23,11 +23,11 @@ variable "memory_mb" {
   type = number
 }
 
-variable "task_ecr_image_uri" {
+variable "image_uri" {
   type = string
 }
 
-variable "sidecar_container_image" {
+variable "sidecar_image_uri" {
   type = string
 }
 
