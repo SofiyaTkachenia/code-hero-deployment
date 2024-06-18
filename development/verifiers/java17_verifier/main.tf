@@ -24,30 +24,30 @@ module "java17_verifier_sqs_queue" {
 }
 
 module "load_balancer" {
-  source                       = "../../../modules/alb_core"
-  base_name                    = var.base_name
-  env_name                     = var.env_name
-  is_load_balancer_internal    = var.is_load_balancer_internal
-  load_balancer_security_group = var.load_balancer_security_group
-  load_balancer_subnets        = var.load_balancer_subnets
-  load_balancer_type           = var.load_balancer_type
+  source            = "../../../modules/alb_core"
+  base_name         = var.base_name
+  env_name          = var.env_name
+  is_lb_internal    = var.is_lb_internal
+  lb_security_group = var.lb_security_group
+  lb_subnets        = var.lb_subnets
+  lb_type           = var.lb_type
 }
 
 module "load_balancer_target_group" {
-  source                                         = "../../../modules/alb_target_group"
-  alb_arn                                        = module.load_balancer.alb_arn
-  base_name                                      = var.base_name
-  env_name                                       = var.env_name
-  health_check_timeout                           = var.health_check_timeout
-  healthy_check_path                             = var.healthy_check_path
-  load_balancer_health_check_interval            = var.load_balancer_health_check_interval
-  load_balancer_listener_path_pattern            = var.load_balancer_listener_path_pattern
-  load_balancer_rule_priority                    = var.load_balancer_rule_priority
-  load_balancer_target_group_port                = var.load_balancer_target_group_port
-  load_balancer_target_group_threshold           = var.load_balancer_target_group_threshold
-  load_balancer_target_group_type                = var.load_balancer_target_group_type
-  load_balancer_target_group_unhealthy_threshold = var.load_balancer_target_group_unhealthy_threshold
-  vpc_id                                         = var.vpc_id
+  source                              = "../../../modules/alb_target_group"
+  alb_arn                             = module.load_balancer.alb_arn
+  base_name                           = var.base_name
+  env_name                            = var.env_name
+  health_check_timeout                = var.health_check_timeout
+  healthy_check_path                  = var.healthy_check_path
+  lb_health_check_interval            = var.lb_health_check_interval
+  lb_listener_path_pattern            = var.lb_listener_path_pattern
+  lb_rule_priority                    = var.lb_rule_priority
+  lb_target_group_port                = var.lb_target_group_port
+  lb_target_group_threshold           = var.lb_target_group_threshold
+  lb_target_group_type                = var.lb_target_group_type
+  lb_target_group_unhealthy_threshold = var.lb_target_group_unhealthy_threshold
+  vpc_id                              = var.vpc_id
 }
 
 module "cluster" {

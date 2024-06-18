@@ -1,24 +1,24 @@
 resource "aws_lb_target_group" "this" {
   name        = "${var.base_name}-${var.env_name}"
-  port        = var.load_balancer_target_group_port
+  port        = var.lb_target_group_port
   protocol    = "HTTP"
-  target_type = var.load_balancer_target_group_type
+  target_type = var.lb_target_group_type
   vpc_id      = var.vpc_id
 
   health_check {
-    healthy_threshold   = var.load_balancer_target_group_threshold
-    interval            = var.load_balancer_health_check_interval
+    healthy_threshold   = var.lb_target_group_threshold
+    interval            = var.lb_health_check_interval
     protocol            = "HTTP"
     matcher             = "200"
     timeout             = var.health_check_timeout
     path                = var.healthy_check_path
-    unhealthy_threshold = var.load_balancer_target_group_unhealthy_threshold
+    unhealthy_threshold = var.lb_target_group_unhealthy_threshold
   }
 }
 
 resource "aws_lb_listener" "this" {
   load_balancer_arn = var.alb_arn
-  port              = var.load_balancer_target_group_port
+  port              = var.lb_target_group_port
   protocol          = "HTTP"
 
   default_action {
@@ -29,7 +29,7 @@ resource "aws_lb_listener" "this" {
 
 resource "aws_lb_listener_rule" "this" {
   listener_arn = aws_lb_listener.this.arn
-  priority     = var.load_balancer_rule_priority
+  priority     = var.lb_rule_priority
 
   action {
     type             = "forward"
@@ -38,7 +38,7 @@ resource "aws_lb_listener_rule" "this" {
 
   condition {
     path_pattern {
-      values = [var.load_balancer_listener_path_pattern]
+      values = [var.lb_listener_path_pattern]
     }
   }
 }

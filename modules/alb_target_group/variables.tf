@@ -6,11 +6,11 @@ variable "base_name" {
   type = string
 }
 
-variable "load_balancer_target_group_port" {
+variable "lb_target_group_port" {
   type = number
 }
 
-variable "load_balancer_target_group_type" {
+variable "lb_target_group_type" {
   type = string
 }
 
@@ -18,23 +18,23 @@ variable "vpc_id" {
   type = string
 }
 
-variable "load_balancer_target_group_threshold" {
+variable "lb_target_group_threshold" {
   type = number
 }
 
-variable "load_balancer_health_check_interval" {
+variable "lb_health_check_interval" {
   type = string
 }
 
-variable "load_balancer_target_group_unhealthy_threshold" {
+variable "lb_target_group_unhealthy_threshold" {
   type = number
 }
 
-variable "load_balancer_rule_priority" {
+variable "lb_rule_priority" {
   type = number
 }
 
-variable "load_balancer_listener_path_pattern" {
+variable "lb_listener_path_pattern" {
   type = string
 }
 

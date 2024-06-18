@@ -6,18 +6,18 @@ variable "base_name" {
   type = string
 }
 
-variable "is_load_balancer_internal" {
+variable "is_lb_internal" {
   type = bool
 }
 
-variable "load_balancer_type" {
+variable "lb_type" {
   type = string
 }
 
-variable "load_balancer_subnets" {
+variable "lb_subnets" {
   type = list(string)
 }
 
-variable "load_balancer_security_group" {
+variable "lb_security_group" {
   type = string
 }

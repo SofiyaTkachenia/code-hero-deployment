@@ -71,19 +71,19 @@ variable "memory_mb_sidecar" {
   type = number
 }
 
-variable "is_load_balancer_internal" {
+variable "is_lb_internal" {
   type = bool
 }
 
-variable "load_balancer_type" {
+variable "lb_type" {
   type = string
 }
 
-variable "load_balancer_subnets" {
+variable "lb_subnets" {
   type = list(string)
 }
 
-variable "load_balancer_security_group" {
+variable "lb_security_group" {
   type = string
 }
 
@@ -95,31 +95,31 @@ variable "healthy_check_path" {
   type = string
 }
 
-variable "load_balancer_health_check_interval" {
+variable "lb_health_check_interval" {
   type = string
 }
 
-variable "load_balancer_listener_path_pattern" {
+variable "lb_listener_path_pattern" {
   type = string
 }
 
-variable "load_balancer_rule_priority" {
+variable "lb_rule_priority" {
   type = number
 }
 
-variable "load_balancer_target_group_port" {
+variable "lb_target_group_port" {
   type = number
 }
 
-variable "load_balancer_target_group_threshold" {
+variable "lb_target_group_threshold" {
   type = number
 }
 
-variable "load_balancer_target_group_unhealthy_threshold" {
+variable "lb_target_group_unhealthy_threshold" {
   type = number
 }
 
-variable "load_balancer_target_group_type" {
+variable "lb_target_group_type" {
   type = string
 }
 
