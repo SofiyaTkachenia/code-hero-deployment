@@ -26,14 +26,14 @@ resource "aws_iam_role" "task_role" {
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_role_assume.json
 }
 
-resource "aws_iam_policy" "ecs_sqs_task_role_policy" {
+resource "aws_iam_policy" "ecs_task_role_policy" {
   name   = "${var.base_name}-ecs-task-role-policy-${var.env_name}"
   policy = var.ecs_task_role_policy
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
   role       = aws_iam_role.task_role.name
-  policy_arn = aws_iam_policy.ecs_sqs_task_role_policy.arn
+  policy_arn = aws_iam_policy.ecs_task_role_policy.arn
 }
 
 #======ECS=========================================================
