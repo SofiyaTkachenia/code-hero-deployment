@@ -51,6 +51,12 @@ module "load_balancer_target_group" {
   vpc_id                                         = var.vpc_id
 }
 
+module "cluster" {
+  source = "../../../modules/ecs_cluster"
+  base_name = var.base_name
+  env_name = var.env_name
+}
+
 module "java17_verifier_ecs_service" {
   source = "../../../modules/ecs_service_core"
 
@@ -58,7 +64,7 @@ module "java17_verifier_ecs_service" {
   base_name                  = var.base_name
   env_name                   = var.env_name
   aws_lb_target_group_arn    = module.load_balancer_target_group.target_group_arn
-  cluster_arn                = var.cluster_arn
+  cluster_arn                = module.cluster.cluster_arn
   ecs_security_group         = var.ecs_security_group
   ecs_task_role_policy       = data.aws_iam_policy_document.ecs_task_role_policy.json
   ecs_subnets                = var.ecs_subnets
@@ -82,7 +88,7 @@ module "java17_ecs_service_autoscaling" {
   adjustment_type           = var.adjustment_type
   aws_ecs_service_name      = module.java17_verifier_ecs_service.aws_ecs_service_name
   base_name                 = var.base_name
-  cluster_id                = var.cluster_id
+  cluster_id                = module.cluster.cluster_id
   coooldown                 = var.coooldown
   env_name                  = var.env_name
   max_capacity              = var.max_capacity
