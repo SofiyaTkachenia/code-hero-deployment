@@ -57,13 +57,7 @@ resource "aws_ecs_task_definition" "this" {
       image     = var.task_ecr_image_uri,
       cpu       = 0
       essential = true,
-      portMappings = var.including_port_mappings ? [
-        {
-          containerPort = var.task_container_port,
-          hostPort      = var.task_host_port,
-          protocol      = "tcp"
-        }
-      ] : []
+      portMappings = var.port_mappings
       logConfiguration = {
         logDriver = "awslogs",
         options = {
@@ -107,7 +101,7 @@ resource "aws_ecs_service" "aws_ecs_service" {
   }
 
   dynamic "load_balancer" {
-    for_each = var.include_load_balancer ? [1] : []
+    for_each = var.is_load_balanced ? [1] : []
     content {
       target_group_arn = var.aws_lb_target_group_arn
       container_name   = var.container_name

@@ -27,14 +27,6 @@ variable "task_ecr_image_uri" {
   type = string
 }
 
-variable "task_container_port" {
-  type = number
-}
-
-variable "task_host_port" {
-  type = number
-}
-
 variable "sidecar_container_image" {
   type = string
 }
@@ -65,11 +57,17 @@ variable "cpu_architecture" {
 
 variable "container_name" {
   type    = string
-  default = "essentials"
+  default = "essential_container_name"
 }
 
-variable "including_port_mappings" {
-  type = bool
+variable "port_mappings" {
+  description = "List of port mappings for the container"
+  type        = list(object({
+    containerPort = number
+    hostPort      = number
+    protocol      = string
+  }))
+  default = []
 }
 
 variable "vcpu_sidecar" {
@@ -80,7 +78,7 @@ variable "memory_mb_sidecar" {
   type = number
 }
 
-variable "include_load_balancer" {
+variable "is_load_balanced" {
   type = bool
 }
 

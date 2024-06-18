@@ -10,10 +10,6 @@ variable "load_balancer_target_group_port" {
   type = number
 }
 
-variable "load_balancer_target_group_protocol" {
-  type = string
-}
-
 variable "load_balancer_target_group_type" {
   type = string
 }
@@ -34,7 +30,7 @@ variable "load_balancer_target_group_unhealthy_threshold" {
   type = number
 }
 
-variable "load_balancer_listener_priority" {
+variable "load_balancer_rule_priority" {
   type = number
 }
 

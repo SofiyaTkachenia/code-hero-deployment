@@ -42,9 +42,8 @@ module "load_balancer_target_group" {
   healthy_check_path                             = var.healthy_check_path
   load_balancer_health_check_interval            = var.load_balancer_health_check_interval
   load_balancer_listener_path_pattern            = var.load_balancer_listener_path_pattern
-  load_balancer_listener_priority                = var.load_balancer_listener_priority
+  load_balancer_rule_priority                    = var.load_balancer_rule_priority
   load_balancer_target_group_port                = var.load_balancer_target_group_port
-  load_balancer_target_group_protocol            = var.load_balancer_target_group_protocol
   load_balancer_target_group_threshold           = var.load_balancer_target_group_threshold
   load_balancer_target_group_type                = var.load_balancer_target_group_type
   load_balancer_target_group_unhealthy_threshold = var.load_balancer_target_group_unhealthy_threshold
@@ -69,14 +68,12 @@ module "java17_verifier_ecs_service" {
   ecs_task_role_policy       = data.aws_iam_policy_document.ecs_task_role_policy.json
   ecs_subnets                = var.ecs_subnets
   sidecar_container_image    = var.sidecar_container_image
-  task_container_port        = var.task_container_port
-  task_host_port             = var.task_host_port
   task_ecr_image_uri         = var.task_ecr_image_uri
   memory_mb                  = var.memory_mb
   vcpus                      = var.vcpus
   cpu_architecture           = var.cpu_architecture
-  including_port_mappings    = var.including_port_mappings
-  include_load_balancer      = true
+  port_mappings              = var.port_mappings
+  is_load_balanced           = var.is_load_balanced
   memory_mb_sidecar          = var.memory_mb_sidecar
   vcpu_sidecar               = var.vcpu_sidecar
   desired_count              = var.desired_count

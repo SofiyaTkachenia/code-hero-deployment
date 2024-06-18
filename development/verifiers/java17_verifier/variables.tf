@@ -39,14 +39,6 @@ variable "task_ecr_image_uri" {
   type = string
 }
 
-variable "task_container_port" {
-  type = number
-}
-
-variable "task_host_port" {
-  type = number
-}
-
 variable "memory_mb" {
   type = number
 }
@@ -69,10 +61,6 @@ variable "ecs_security_group" {
 
 variable "cpu_architecture" {
   type = string
-}
-
-variable "including_port_mappings" {
-  type = bool
 }
 
 variable "vcpu_sidecar" {
@@ -115,16 +103,12 @@ variable "load_balancer_listener_path_pattern" {
   type = string
 }
 
-variable "load_balancer_listener_priority" {
+variable "load_balancer_rule_priority" {
   type = number
 }
 
 variable "load_balancer_target_group_port" {
   type = number
-}
-
-variable "load_balancer_target_group_protocol" {
-  type = string
 }
 
 variable "load_balancer_target_group_threshold" {
@@ -213,4 +197,18 @@ variable "max_messages_in_the_queue" {
 
 variable "desired_count" {
   type = number
+}
+
+variable "is_load_balanced" {
+  type = bool
+}
+
+variable "port_mappings" {
+  description = "List of port mappings for the container"
+  type        = list(object({
+    containerPort = number
+    hostPort      = number
+    protocol      = string
+  }))
+  default = []
 }
