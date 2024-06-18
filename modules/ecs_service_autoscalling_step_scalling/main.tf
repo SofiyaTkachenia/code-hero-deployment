@@ -14,8 +14,8 @@ resource "aws_appautoscaling_policy" "ecs_policy_alb_request_count_per_target" {
   service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
 
   step_scaling_policy_configuration {
-    adjustment_type         = var.adjustment_type
-    cooldown                = var.coooldown
+    adjustment_type         = "ExactCapacity"
+    cooldown                = var.autoscaling_cooldown_seconds
     metric_aggregation_type = var.metric_aggregation_type
 
     step_adjustment {
@@ -24,7 +24,7 @@ resource "aws_appautoscaling_policy" "ecs_policy_alb_request_count_per_target" {
     }
 
     step_adjustment {
-      scaling_adjustment          = var.max_containers
+      scaling_adjustment          = var.max_replicas
       metric_interval_lower_bound = var.max_messages_in_the_queue
     }
 

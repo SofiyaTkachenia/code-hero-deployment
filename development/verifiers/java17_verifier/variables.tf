@@ -1,5 +1,5 @@
 variable "aws_region" {
-  type = string
+  type    = string
   default = "eu-central-1"
 }
 
@@ -60,11 +60,11 @@ variable "sidecar_container_image" {
 }
 
 variable "ecs_subnets" {
-  type    = list(string)
+  type = list(string)
 }
 
 variable "ecs_security_group" {
-  type    = list(string)
+  type = list(string)
 }
 
 variable "cpu_architecture" {
@@ -183,11 +183,7 @@ variable "policy_type" {
   type = string
 }
 
-variable "adjustment_type" {
-  type = string
-}
-
-variable "coooldown" {
+variable "autoscaling_cooldown_seconds" {
   type = number
 }
 
@@ -201,13 +197,13 @@ variable "alarm_namespace" {
 
 variable "dynamic_step_adjustments" {
   type = list(object({
-    scaling_adjustment             = number
-    metric_interval_lower_bound    = number
-    metric_interval_upper_bound    = number
+    scaling_adjustment          = number
+    metric_interval_lower_bound = number
+    metric_interval_upper_bound = number
   }))
 }
 
-variable "max_containers" {
+variable "max_replicas" {
   type = number
 }
 

@@ -26,11 +26,7 @@ variable "policy_type" {
   type = string
 }
 
-variable "adjustment_type" {
-  type = string
-}
-
-variable "coooldown" {
+variable "autoscaling_cooldown_seconds" {
   type = number
 }
 
@@ -46,7 +42,7 @@ variable "dynamic_step_adjustments" {
   }))
 }
 
-variable "max_containers" {
+variable "max_replicas" {
   type = number
 }
 

@@ -52,9 +52,9 @@ module "load_balancer_target_group" {
 }
 
 module "cluster" {
-  source = "../../../modules/ecs_cluster"
+  source    = "../../../modules/ecs_cluster"
   base_name = var.base_name
-  env_name = var.env_name
+  env_name  = var.env_name
 }
 
 module "java17_verifier_ecs_service" {
@@ -83,21 +83,20 @@ module "java17_verifier_ecs_service" {
 }
 
 module "java17_ecs_service_autoscaling" {
-  depends_on                = [module.java17_verifier_ecs_service]
-  source                    = "../../../modules/ecs_service_autoscalling_step_scalling"
-  adjustment_type           = var.adjustment_type
-  aws_ecs_service_name      = module.java17_verifier_ecs_service.aws_ecs_service_name
-  base_name                 = var.base_name
-  cluster_id                = module.cluster.cluster_id
-  coooldown                 = var.coooldown
-  env_name                  = var.env_name
-  max_capacity              = var.max_capacity
-  metric_aggregation_type   = var.metric_aggregation_type
-  min_capacity              = var.min_capacity
-  policy_type               = var.policy_type
-  dynamic_step_adjustments  = var.dynamic_step_adjustments
-  max_containers            = var.max_containers
-  max_messages_in_the_queue = var.max_messages_in_the_queue
+  depends_on                   = [module.java17_verifier_ecs_service]
+  source                       = "../../../modules/ecs_service_autoscalling_step_scalling"
+  aws_ecs_service_name         = module.java17_verifier_ecs_service.aws_ecs_service_name
+  base_name                    = var.base_name
+  cluster_id                   = module.cluster.cluster_id
+  autoscaling_cooldown_seconds = var.autoscaling_cooldown_seconds
+  env_name                     = var.env_name
+  max_capacity                 = var.max_capacity
+  metric_aggregation_type      = var.metric_aggregation_type
+  min_capacity                 = var.min_capacity
+  policy_type                  = var.policy_type
+  dynamic_step_adjustments     = var.dynamic_step_adjustments
+  max_replicas                 = var.max_replicas
+  max_messages_in_the_queue    = var.max_messages_in_the_queue
 }
 
 module "java17_cloud_watch_metric_alarm" {
@@ -114,4 +113,3 @@ module "java17_cloud_watch_metric_alarm" {
   threshold                  = var.threshold
   alarm_namespace            = var.alarm_namespace
 }
-
