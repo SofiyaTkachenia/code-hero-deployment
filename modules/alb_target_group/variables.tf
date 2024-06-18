@@ -42,10 +42,10 @@ variable "alb_arn" {
   type = string
 }
 
-variable "healthy_check_path" {
+variable "health_check_path" {
   type = string
 }
 
-variable "health_check_timeout" {
+variable "health_check_seconds_timeout" {
   type = string
 }

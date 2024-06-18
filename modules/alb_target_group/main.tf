@@ -10,8 +10,8 @@ resource "aws_lb_target_group" "this" {
     interval            = var.lb_health_check_interval
     protocol            = "HTTP"
     matcher             = "200"
-    timeout             = var.health_check_timeout
-    path                = var.healthy_check_path
+    timeout             = var.health_check_seconds_timeout
+    path                = var.health_check_path
     unhealthy_threshold = var.lb_target_group_unhealthy_threshold
   }
 }

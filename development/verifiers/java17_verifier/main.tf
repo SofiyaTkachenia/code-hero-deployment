@@ -38,8 +38,8 @@ module "load_balancer_target_group" {
   alb_arn                             = module.load_balancer.alb_arn
   base_name                           = var.base_name
   env_name                            = var.env_name
-  health_check_timeout                = var.health_check_timeout
-  healthy_check_path                  = var.healthy_check_path
+  health_check_seconds_timeout        = var.health_check_seconds_timeout
+  health_check_path                   = var.health_check_path
   lb_health_check_interval            = var.lb_health_check_interval
   lb_listener_path_pattern            = var.lb_listener_path_pattern
   lb_rule_priority                    = var.lb_rule_priority
