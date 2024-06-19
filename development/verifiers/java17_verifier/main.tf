@@ -1,10 +1,3 @@
-module "s3_bucket" {
-  source = "../../../modules/s3bucket"
-
-  base_name = var.base_name
-  env_name  = var.env_name
-}
-
 module "problem_registry_sqs_queue" {
   source = "../../../modules/sqs"
 
@@ -97,6 +90,7 @@ module "java17_ecs_service_autoscaling" {
 }
 
 module "java17_cloud_watch_metric_alarm" {
+  depends_on = [module.java17_ecs_service_autoscaling]
   source                     = "../../../modules/cloudwatch_metric_alarm"
   alarm_base_name            = var.alarm_base_name
   aws_autoscaling_policy_arn = module.java17_ecs_service_autoscaling.autoscaling_policy_arn

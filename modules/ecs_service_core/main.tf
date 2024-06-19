@@ -109,5 +109,3 @@ resource "aws_ecs_service" "aws_ecs_service" {
     }
   }
 }
-
-

@@ -1,7 +1,11 @@
-variable "env_name" {
+variable "base_name" {
   type = string
 }
 
-variable "base_name" {
+variable "bucket_name" {
+  type = string
+}
+
+variable "env_name" {
   type = string
 }
