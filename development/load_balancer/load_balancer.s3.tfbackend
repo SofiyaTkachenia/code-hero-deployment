@@ -1,0 +1,4 @@
+bucket               = "code-hero"
+workspace_key_prefix = ""
+key                  = "/dev/load_balancer/terraform.tfstate"
+region               = "eu-central-1"

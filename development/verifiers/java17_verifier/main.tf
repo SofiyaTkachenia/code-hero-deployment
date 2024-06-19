@@ -1,34 +1,16 @@
-module "problem_registry_sqs_queue" {
-  source = "../../../modules/sqs"
-
-  base_name       = var.base_name
-  base_queue_name = var.base_problem_registry_queue_name
-  delay_seconds   = var.delay_seconds
-  env_name        = var.env_name
-}
-
 module "java17_verifier_sqs_queue" {
   source = "../../../modules/sqs"
 
   base_name       = var.base_name
+  env_name        = var.env_name
   base_queue_name = var.base_java_17_verifier_queue_name
   delay_seconds   = var.delay_seconds
-  env_name        = var.env_name
-}
-
-module "load_balancer" {
-  source            = "../../../modules/alb_core"
-  base_name         = var.base_name
-  env_name          = var.env_name
-  is_lb_internal    = var.is_lb_internal
-  lb_security_group = var.lb_security_group
-  lb_subnets        = var.lb_subnets
-  lb_type           = var.lb_type
 }
 
 module "load_balancer_target_group" {
   source                              = "../../../modules/alb_target_group"
-  alb_arn                             = module.load_balancer.alb_arn
+
+  alb_arn                             = var.alb_arn
   base_name                           = var.base_name
   env_name                            = var.env_name
   health_check_seconds_timeout        = var.health_check_seconds_timeout
@@ -45,6 +27,7 @@ module "load_balancer_target_group" {
 
 module "cluster" {
   source    = "../../../modules/ecs_cluster"
+
   base_name = var.base_name
   env_name  = var.env_name
 }
@@ -73,8 +56,8 @@ module "java17_verifier_ecs_service" {
 }
 
 module "java17_ecs_service_autoscaling" {
-  depends_on                   = [module.java17_verifier_ecs_service]
   source                       = "../../../modules/ecs_service_autoscalling_step_scalling"
+
   aws_ecs_service_name         = module.java17_verifier_ecs_service.aws_ecs_service_name
   base_name                    = var.base_name
   cluster_id                   = module.cluster.cluster_id
@@ -92,6 +75,7 @@ module "java17_ecs_service_autoscaling" {
 module "java17_cloud_watch_metric_alarm" {
   depends_on = [module.java17_ecs_service_autoscaling]
   source                     = "../../../modules/cloudwatch_metric_alarm"
+
   alarm_base_name            = var.alarm_base_name
   aws_autoscaling_policy_arn = module.java17_ecs_service_autoscaling.autoscaling_policy_arn
   comparison_operator        = var.comparison_operator

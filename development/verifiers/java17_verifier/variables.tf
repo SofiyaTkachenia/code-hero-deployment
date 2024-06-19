@@ -71,22 +71,6 @@ variable "memory_mb_sidecar" {
   type = number
 }
 
-variable "is_lb_internal" {
-  type = bool
-}
-
-variable "lb_type" {
-  type = string
-}
-
-variable "lb_subnets" {
-  type = list(string)
-}
-
-variable "lb_security_group" {
-  type = string
-}
-
 variable "health_check_seconds_timeout" {
   type = string
 }
@@ -211,4 +195,8 @@ variable "port_mappings" {
     protocol      = string
   })
   default = ({})
+}
+
+variable "alb_arn" {
+  type = string
 }
