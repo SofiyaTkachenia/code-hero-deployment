@@ -31,10 +31,6 @@ variable "sidecar_image_uri" {
   type = string
 }
 
-variable "aws_lb_target_group_arn" {
-  type = string
-}
-
 variable "cluster_arn" {
   type = string
 }
@@ -78,10 +74,90 @@ variable "memory_mb_sidecar" {
   type = number
 }
 
-variable "is_load_balanced" {
-  type = bool
+variable "desired_count" {
+  type = number
 }
 
-variable "desired_count" {
+variable "comparison_operator" {
+  type = string
+}
+
+variable "evaluation_periods" {
+  type = number
+}
+
+variable "metric_name" {
+  type = string
+}
+
+variable "statistic_period" {
+  type = number
+}
+
+variable "statistic_type" {
+  type = string
+}
+
+variable "threshold" {
+  type = number
+}
+
+variable "queue_name" {
+  type = string
+}
+
+variable "aws_autoscaling_policy_arn" {
+  type = string
+}
+
+variable "alarm_namespace" {
+  type = string
+}
+
+variable "alarm_base_name" {
+  type = string
+}
+
+variable "lb_health_check_interval" {
+  type = string
+}
+
+variable "lb_listener_path_pattern" {
+  type = string
+}
+
+variable "lb_rule_priority" {
+  type = number
+}
+
+variable "lb_target_group_port" {
+  type = number
+}
+
+variable "lb_target_group_threshold" {
+  type = number
+}
+
+variable "lb_target_group_unhealthy_threshold" {
+  type = number
+}
+
+variable "lb_target_group_type" {
+  type = string
+}
+
+variable "health_check_seconds_timeout" {
+  type = string
+}
+
+variable "health_check_path" {
+  type = string
+}
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "container_port" {
   type = number
 }

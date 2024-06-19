@@ -53,10 +53,10 @@ resource "aws_ecs_task_definition" "this" {
 
   container_definitions = jsonencode([
     {
-      name      = var.container_name,
-      image     = var.image_uri,
-      cpu       = 0
-      essential = true,
+      name         = var.container_name,
+      image        = var.image_uri,
+      cpu          = 0
+      essential    = true,
       portMappings = var.port_mappings
       logConfiguration = {
         logDriver = "awslogs",
@@ -100,12 +100,47 @@ resource "aws_ecs_service" "aws_ecs_service" {
     assign_public_ip = false
   }
 
-  dynamic "load_balancer" {
-    for_each = var.is_load_balanced ? [1] : []
-    content {
-      target_group_arn = var.aws_lb_target_group_arn
-      container_name   = var.container_name
-      container_port   = var.task_container_port
-    }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.this.arn
+    container_name   = var.container_name
+    container_port   = var.container_port
+  }
+}
+
+#======ALBTargetGroup=========================================================
+resource "aws_lb_target_group" "this" {
+  name        = "${var.base_name}-${var.env_name}"
+  port        = var.lb_target_group_port
+  protocol    = "HTTP"
+  target_type = var.lb_target_group_type
+  vpc_id      = var.vpc_id
+
+  health_check {
+    healthy_threshold   = var.lb_target_group_threshold
+    interval            = var.lb_health_check_interval
+    protocol            = "HTTP"
+    matcher             = "200"
+    timeout             = var.health_check_seconds_timeout
+    path                = var.health_check_path
+    unhealthy_threshold = var.lb_target_group_unhealthy_threshold
+  }
+}
+
+#======CloudwatchMetricAlarm====================================================
+resource "aws_cloudwatch_metric_alarm" "this" {
+  alarm_name          = "${var.alarm_base_name}-${var.env_name}"
+  comparison_operator = var.comparison_operator
+  evaluation_periods  = var.evaluation_periods
+  metric_name         = var.metric_name
+  namespace           = var.alarm_namespace
+  period              = var.statistic_period
+  statistic           = var.statistic_type
+  threshold           = var.threshold
+  actions_enabled     = true
+  alarm_actions       = [var.aws_autoscaling_policy_arn]
+  ok_actions          = [var.aws_autoscaling_policy_arn]
+
+  dimensions = {
+    QueueName = var.queue_name
   }
 }
