@@ -205,10 +205,10 @@ variable "is_load_balanced" {
 
 variable "port_mappings" {
   description = "List of port mappings for the container"
-  type        = list(object({
+  type        = object({
     containerPort = number
     hostPort      = number
     protocol      = string
-  }))
-  default = []
+  })
+  default = ({})
 }
