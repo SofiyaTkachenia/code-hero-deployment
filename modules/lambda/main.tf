@@ -15,7 +15,7 @@ resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
 }
 
 #======Lambda=======================================================
-resource "aws_lambda_function" "profile_faker_function" {
+resource "aws_lambda_function" "this" {
   function_name = "${var.base_name}-${var.lambda_name}-${var.env_name}"
   timeout       = var.lambda_timeout
   image_uri     = var.image_url
