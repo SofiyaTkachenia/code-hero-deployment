@@ -1,4 +1,4 @@
 bucket               = "code-hero"
 workspace_key_prefix = ""
-key                  = "dev/lambda_based_verifier/terraform.tfstate"
+key                  = "dev/ecs_based_verifier/terraform.tfstate"
 region               = "eu-central-1"
