@@ -1,4 +1,0 @@
-bucket               = "code-hero"
-workspace_key_prefix = ""
-key                  = "/dev/terraform.tfstate"
-region               = "eu-central-1"

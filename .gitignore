@@ -1,5 +1,5 @@
 # Local .terraform directories
-development/verifiers/java17_verifier/.terraform/*
+development/verifiers/ecs_based_verifier/.terraform/*
 
 # .tfstate files
 *.tfstate
