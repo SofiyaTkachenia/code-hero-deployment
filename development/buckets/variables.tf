@@ -11,6 +11,10 @@ variable "solution_bucket_name" {
   type = string
 }
 
+variable "compiled_files_bucket_name" {
+  type = string
+}
+
 variable "correct_output_bucket_name" {
   type = string
 }
