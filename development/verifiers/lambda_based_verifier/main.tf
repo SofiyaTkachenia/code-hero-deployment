@@ -5,6 +5,7 @@ module "java17_sqs_queue" {
   delay_seconds = var.delay_seconds
   env_name      = var.env_name
   queue_name    = var.java17_sqs_queue
+  queue_role_policy = data.aws_iam_policy_document.queue_role_policy.json
 }
 
 module "java17_compiler_lambda" {

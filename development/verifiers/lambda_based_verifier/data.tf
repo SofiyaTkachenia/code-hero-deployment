@@ -17,3 +17,11 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
     resources = [module.java17_compiler_lambda.lambda_arn]
   }
 }
+
+data "aws_iam_policy_document" "queue_role_policy" {
+  statement {
+    effect    = "Allow"
+    actions   = ["lambda:CreateEventSourceMapping", "lambda:ListEventSourceMappings", "lambda:ListFunctions"]
+    resources = [module.java17_sqs_queue.queue_arn]
+  }
+}
