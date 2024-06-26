@@ -34,3 +34,7 @@ variable "lambda_timeout" {
 variable "batch_size" {
   type = number
 }
+
+variable "lambda_memory" {
+  type = number
+}

@@ -26,3 +26,7 @@ variable "lambda_env_variables" {
   type = map(string)
   default = {}
 }
+
+variable "lambda_memory" {
+  type = number
+}

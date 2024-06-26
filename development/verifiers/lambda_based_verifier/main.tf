@@ -16,6 +16,7 @@ module "java17_compiler_lambda" {
   lambda_name             = var.java17_compiler_lambda_name
   lambda_task_role_policy = data.aws_iam_policy_document.ecs_task_role_policy.json
   lambda_timeout          = var.lambda_timeout
+  lambda_memory           = var.lambda_memory
 }
 
 module "lambda_event_source_mapping" {
