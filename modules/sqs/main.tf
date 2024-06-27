@@ -1,19 +1,3 @@
-#======IAM=========================================================
-resource "aws_iam_role" "queue_role" {
-  name               = "iam_for_queue"
-  assume_role_policy = data.aws_iam_policy_document.queue_role_assume.json
-}
-
-resource "aws_iam_policy" "iam_policy_for_queue" {
-  name   = "${var.base_name}-${var.queue_name}-${var.env_name}"
-  policy = var.queue_role_policy
-}
-
-resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
-  role       = aws_iam_role.queue_role.name
-  policy_arn = aws_iam_policy.iam_policy_for_queue.arn
-}
-
 #======SQS==========================================================
 
 resource "aws_sqs_queue" "this" {
@@ -28,5 +12,3 @@ resource "aws_sqs_queue" "this" {
     Environment = var.env_name
   }
 }
-
-

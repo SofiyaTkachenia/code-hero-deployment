@@ -28,7 +28,3 @@ variable "receive_wait_time_seconds" {
   type    = number
   default = 10
 }
-
-variable "queue_role_policy" {
-  type = string
-}
