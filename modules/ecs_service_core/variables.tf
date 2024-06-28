@@ -122,6 +122,10 @@ variable "lb_health_check_interval" {
   type = string
 }
 
+variable "lb_listener_arn" {
+  type = string
+}
+
 variable "lb_listener_path_pattern" {
   type = string
 }

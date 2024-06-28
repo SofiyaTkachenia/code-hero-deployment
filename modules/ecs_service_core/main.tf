@@ -126,6 +126,23 @@ resource "aws_lb_target_group" "this" {
   }
 }
 
+#======ALBListenerRule========================================================
+resource "aws_lb_listener_rule" "this" {
+  listener_arn = var.lb_listener_arn
+  priority     = var.lb_rule_priority
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.this.arn
+  }
+
+  condition {
+    path_pattern {
+      values = [var.lb_listener_path_pattern]
+    }
+  }
+}
+
 #======CloudwatchMetricAlarm====================================================
 resource "aws_cloudwatch_metric_alarm" "this" {
   alarm_name          = "${var.alarm_base_name}-${var.env_name}"

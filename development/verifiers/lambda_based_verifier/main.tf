@@ -14,9 +14,9 @@ module "java17_compiler_lambda" {
   env_name                = var.env_name
   image_url               = var.image_url
   lambda_name             = var.java17_compiler_lambda_name
-  lambda_task_role_policy = data.aws_iam_policy_document.ecs_task_role_policy.json
-  lambda_seconds_timeout  = var.lambda_seconds_timeout
-  lambda_mb_memory        = var.lambda_mb_memory
+  lambda_task_role_policy = data.aws_iam_policy_document.lambda_policy.json
+  lambda_timeout_seconds  = var.lambda_timeout_seconds
+  lambda_memory_mb        = var.lambda_memory_mb
 }
 
 module "lambda_event_source_mapping" {

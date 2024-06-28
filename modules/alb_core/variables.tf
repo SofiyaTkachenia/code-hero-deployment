@@ -21,3 +21,11 @@ variable "lb_subnets" {
 variable "lb_security_group" {
   type = string
 }
+
+variable "lb_target_group_port" {
+  type = number
+}
+
+variable "lb_target_group_arn" {
+  type = string
+}

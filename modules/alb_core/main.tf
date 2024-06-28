@@ -5,3 +5,14 @@ resource "aws_alb" "this" {
   subnets            = var.lb_subnets
   security_groups    = [var.lb_security_group]
 }
+
+resource "aws_lb_listener" "this" {
+  load_balancer_arn = aws_alb.this.arn
+  port              = var.lb_target_group_port
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = var.lb_target_group_arn
+  }
+}
