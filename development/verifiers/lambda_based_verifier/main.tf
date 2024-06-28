@@ -1,4 +1,4 @@
-module "java17_sqs_queue" {
+module "java17_solutions" {
   source = "../../../modules/sqs"
 
   base_name                    = var.base_name
@@ -19,9 +19,9 @@ module "java17_compiler_lambda" {
   lambda_memory_mb        = var.lambda_memory_mb
 }
 
-module "lambda_event_source_mapping" {
-  source = "../../../modules/lambda_event_source_mapping"
-
-  lambda_arn = module.java17_compiler_lambda.lambda_arn
-  queue_arn  = module.java17_sqs_queue.queue_arn
+resource "aws_lambda_event_source_mapping" "this" {
+  event_source_arn = module.java17_solutions.queue_arn
+  enabled          = true
+  function_name    = module.java17_compiler_lambda.lambda_arn
+  batch_size       = 1
 }
