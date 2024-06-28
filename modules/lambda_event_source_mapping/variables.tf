@@ -5,7 +5,3 @@ variable "queue_arn" {
 variable "lambda_arn" {
   type = string
 }
-
-variable "batch_size" {
-  type = string
-}

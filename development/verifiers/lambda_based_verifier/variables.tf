@@ -15,7 +15,7 @@ variable "java17_sqs_queue" {
   type = string
 }
 
-variable "delay_seconds" {
+variable "message_delay_period_seconds" {
   type = number
 }
 
@@ -27,14 +27,10 @@ variable "java17_compiler_lambda_name" {
   type = string
 }
 
-variable "lambda_timeout" {
+variable "lambda_timeout_seconds" {
   type = number
 }
 
-variable "batch_size" {
-  type = number
-}
-
-variable "lambda_memory" {
+variable "lambda_memory_mb" {
   type = number
 }

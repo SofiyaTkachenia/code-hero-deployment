@@ -14,7 +14,7 @@ variable "lambda_task_role_policy" {
   type = string
 }
 
-variable "lambda_timeout" {
+variable "lambda_timeout_seconds" {
   type = number
 }
 
@@ -27,6 +27,6 @@ variable "lambda_env_variables" {
   default = {}
 }
 
-variable "lambda_memory" {
+variable "lambda_memory_mb" {
   type = number
 }

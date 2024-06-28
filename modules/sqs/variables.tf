@@ -10,7 +10,7 @@ variable "queue_name" {
   type = string
 }
 
-variable "delay_seconds" {
+variable "message_delay_period_seconds" {
   type = number
 }
 

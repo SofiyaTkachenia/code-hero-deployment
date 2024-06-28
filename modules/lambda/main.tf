@@ -17,9 +17,9 @@ resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
 #======Lambda=======================================================
 resource "aws_lambda_function" "this" {
   function_name = "${var.base_name}-${var.lambda_name}-${var.env_name}"
-  timeout       = var.lambda_timeout
+  timeout       = var.lambda_timeout_seconds
   image_uri     = var.image_url
-  memory_size   = var.lambda_memory
+  memory_size   = var.lambda_memory_mb
   package_type  = "Image"
 
   role = aws_iam_role.lambda_role.arn
