@@ -32,7 +32,7 @@ module "java17_ecs_service_autoscaling" {
 }
 
 module "java17_verifier_ecs_service" {
-  source = "../../../modules/ecs_service_core"
+  source = "../../../modules/ecs_service"
 
   alarm_base_name                     = var.alarm_base_name
   alarm_namespace                     = var.alarm_namespace

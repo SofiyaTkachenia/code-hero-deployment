@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"java17_compiler_lambda","Source":"../../../modules/lambda","Dir":"../../../modules/lambda"},{"Key":"java17_sqs_queue","Source":"../../../modules/sqs","Dir":"../../../modules/sqs"},{"Key":"lambda_event_source_mapping","Source":"../../../modules/lambda_event_source_mapping","Dir":"../../../modules/lambda_event_source_mapping"}]}

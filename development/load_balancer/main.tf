@@ -1,5 +1,5 @@
 module "problem_registry_sqs_queue" {
-  source = "../../modules/alb_core"
+  source = "../../modules/alb"
 
   base_name         = var.base_name
   env_name          = var.env_name

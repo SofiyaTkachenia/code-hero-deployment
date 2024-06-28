@@ -1,11 +1,11 @@
 #======IAM=========================================================
 resource "aws_iam_role" "lambda_role" {
-  name               = "iam_for_lambda"
+  name               = "${var.base_name}-${var.lambda_name}-role-${var.env_name}"
   assume_role_policy = data.aws_iam_policy_document.lambda_role_assume.json
 }
 
 resource "aws_iam_policy" "iam_policy_for_lambda" {
-  name   = "${var.base_name}-${var.lambda_name}-${var.env_name}"
+  name   = "${var.base_name}-${var.lambda_name}-policy-${var.env_name}"
   policy = var.lambda_task_role_policy
 }
 
