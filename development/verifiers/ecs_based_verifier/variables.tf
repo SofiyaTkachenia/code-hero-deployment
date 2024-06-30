@@ -19,7 +19,7 @@ variable "queue_name" {
   type = string
 }
 
-variable "delay_seconds" {
+variable "message_delay_period_seconds" {
   type = string
 }
 
@@ -104,6 +104,10 @@ variable "lb_target_group_unhealthy_threshold" {
 }
 
 variable "lb_target_group_type" {
+  type = string
+}
+
+variable "lb_listener_arn" {
   type = string
 }
 
@@ -195,10 +199,6 @@ variable "port_mappings" {
     protocol      = string
   }))
   default = []
-}
-
-variable "alb_arn" {
-  type = string
 }
 
 variable "container_port" {

@@ -1,10 +1,10 @@
 module "java17_verifier_sqs_queue" {
   source = "../../../modules/sqs"
 
-  base_name     = var.base_name
-  delay_seconds = var.delay_seconds
-  env_name      = var.env_name
-  queue_name    = var.queue_name
+  base_name                    = var.base_name
+  env_name                     = var.env_name
+  message_delay_period_seconds = var.message_delay_period_seconds
+  queue_name                   = var.queue_name
 }
 
 module "cluster" {
@@ -46,13 +46,14 @@ module "java17_verifier_ecs_service" {
   desired_count                       = var.desired_count
   ecs_security_group                  = var.ecs_security_group
   ecs_subnets                         = var.ecs_subnets
-  ecs_task_role_policy                = data.aws_iam_policy_document.ecs_task_role_policy.json
+  ecs_task_role_policy                = data.aws_iam_policy_document.ecs_task_role_policy
   env_name                            = var.env_name
   evaluation_periods                  = var.evaluation_periods
   health_check_path                   = var.health_check_path
   health_check_seconds_timeout        = var.health_check_seconds_timeout
   image_uri                           = var.image_uri
   lb_health_check_interval            = var.lb_health_check_interval
+  lb_listener_arn                     = var.lb_listener_arn
   lb_listener_path_pattern            = var.lb_listener_path_pattern
   lb_rule_priority                    = var.lb_rule_priority
   lb_target_group_port                = var.lb_target_group_port
@@ -62,7 +63,7 @@ module "java17_verifier_ecs_service" {
   memory_mb                           = var.memory_mb
   memory_mb_sidecar                   = var.memory_mb_sidecar
   metric_name                         = var.metric_name
-  queue_name                          = module.java17_verifier_sqs_queue.queue_name
+  queue_name                          = var.queue_name
   sidecar_image_uri                   = var.sidecar_image_uri
   statistic_period                    = var.statistic_period
   statistic_type                      = var.statistic_type
@@ -70,14 +71,4 @@ module "java17_verifier_ecs_service" {
   vcpu_sidecar                        = var.vcpu_sidecar
   vcpus                               = var.vcpus
   vpc_id                              = var.vpc_id
-}
-
-module "alb_listener" {
-  source = "../../../modules/alb_listener"
-
-  alb_arn                  = ""
-  aws_lb_target_group_arn  = ""
-  lb_listener_path_pattern = ""
-  lb_rule_priority         = 0
-  lb_target_group_port     = 0
 }

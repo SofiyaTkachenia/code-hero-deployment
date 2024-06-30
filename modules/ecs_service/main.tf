@@ -128,7 +128,7 @@ resource "aws_lb_target_group" "this" {
 
 #======ALBListenerRule========================================================
 resource "aws_lb_listener_rule" "this" {
-  listener_arn = var.lb_listener_arn
+  listener_arn = var.ecs_task_role_policy
   priority     = var.lb_rule_priority
 
   action {
