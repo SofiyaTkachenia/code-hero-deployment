@@ -1,6 +1,4 @@
-
 #======CloudWatch==================================================
-
 resource "aws_cloudwatch_log_group" "this" {
   name              = "/aws/ecs/${var.base_name}-${var.env_name}"
   retention_in_days = var.cloud_watch_retention_days

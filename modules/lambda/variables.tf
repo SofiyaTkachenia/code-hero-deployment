@@ -10,6 +10,10 @@ variable "lambda_name" {
   type = string
 }
 
+variable "cloud_watch_retention_days" {
+  type = number
+}
+
 variable "lambda_task_role_policy" {
   type = string
 }
@@ -23,10 +27,18 @@ variable "image_url" {
 }
 
 variable "lambda_env_variables" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 
 variable "lambda_memory_mb" {
   type = number
+}
+
+variable "subnet_id" {
+  type = list(string)
+}
+
+variable "security_group_ids" {
+  type = list(string)
 }

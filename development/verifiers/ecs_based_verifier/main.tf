@@ -53,7 +53,6 @@ module "java17_verifier_ecs_service" {
   health_check_seconds_timeout        = var.health_check_seconds_timeout
   image_uri                           = var.image_uri
   lb_health_check_interval            = var.lb_health_check_interval
-  lb_listener_arn                     = var.lb_listener_arn
   lb_listener_path_pattern            = var.lb_listener_path_pattern
   lb_rule_priority                    = var.lb_rule_priority
   lb_target_group_port                = var.lb_target_group_port

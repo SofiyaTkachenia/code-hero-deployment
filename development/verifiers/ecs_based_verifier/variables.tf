@@ -107,10 +107,6 @@ variable "lb_target_group_type" {
   type = string
 }
 
-variable "lb_listener_arn" {
-  type = string
-}
-
 variable "vpc_id" {
   type = string
 }

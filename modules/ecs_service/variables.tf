@@ -58,7 +58,7 @@ variable "container_name" {
 
 variable "port_mappings" {
   description = "List of port mappings for the container"
-  type        = list(object({
+  type = list(object({
     containerPort = number
     hostPort      = number
     protocol      = string
@@ -119,10 +119,6 @@ variable "alarm_base_name" {
 }
 
 variable "lb_health_check_interval" {
-  type = string
-}
-
-variable "lb_listener_arn" {
   type = string
 }
 

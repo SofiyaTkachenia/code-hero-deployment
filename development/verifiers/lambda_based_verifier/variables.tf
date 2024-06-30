@@ -34,3 +34,31 @@ variable "lambda_timeout_seconds" {
 variable "lambda_memory_mb" {
   type = number
 }
+
+variable "cloud_watch_retention_days" {
+  type = number
+}
+
+variable "s3_put_object_bucket_arn" {
+  type = string
+}
+
+variable "s3_get_object_bucket_arn" {
+  type = string
+}
+
+variable "get_messages_queue_arn" {
+  type = string
+}
+
+variable "send_messages_queue_arn" {
+  type = string
+}
+
+variable "subnet_id" {
+  type = list(string)
+}
+
+variable "security_group_ids" {
+  type = list(string)
+}
