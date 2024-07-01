@@ -1,10 +1,11 @@
 module "java17_verifier_sqs_queue" {
   source = "../../../modules/sqs"
 
-  base_name                    = var.base_name
-  env_name                     = var.env_name
-  message_delay_period_seconds = var.message_delay_period_seconds
-  queue_name                   = var.queue_name
+  base_name                        = var.base_name
+  env_name                         = var.env_name
+  message_delay_period_seconds     = var.message_delay_period_seconds
+  queue_name                       = var.queue_name
+  queue_visibility_timeout_seconds = var.queue_visibility_timeout_seconds
 }
 
 module "cluster" {
@@ -39,14 +40,14 @@ module "java17_verifier_ecs_service" {
   aws_autoscaling_policy_arn          = module.java17_ecs_service_autoscaling.autoscaling_policy_arn
   base_name                           = var.base_name
   cloud_watch_retention_days          = var.cloud_watch_retention_days
-  cluster_arn                         = var.cluster_arn
+  cluster_arn                         = module.cluster.cluster_arn
   comparison_operator                 = var.comparison_operator
   container_port                      = var.container_port
   cpu_architecture                    = var.cpu_architecture
   desired_count                       = var.desired_count
   ecs_security_group                  = var.ecs_security_group
   ecs_subnets                         = var.ecs_subnets
-  ecs_task_role_policy                = data.aws_iam_policy_document.ecs_task_role_policy
+  ecs_task_role_policy                = data.aws_iam_policy_document.ecs_task_role_policy.json
   env_name                            = var.env_name
   evaluation_periods                  = var.evaluation_periods
   health_check_path                   = var.health_check_path
@@ -70,4 +71,5 @@ module "java17_verifier_ecs_service" {
   vcpu_sidecar                        = var.vcpu_sidecar
   vcpus                               = var.vcpus
   vpc_id                              = var.vpc_id
+  listener_arn                        = var.listener_arn
 }

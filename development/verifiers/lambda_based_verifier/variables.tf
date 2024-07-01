@@ -47,10 +47,6 @@ variable "s3_get_object_bucket_arn" {
   type = string
 }
 
-variable "get_messages_queue_arn" {
-  type = string
-}
-
 variable "send_messages_queue_arn" {
   type = string
 }
@@ -61,4 +57,8 @@ variable "subnet_id" {
 
 variable "security_group_ids" {
   type = list(string)
+}
+
+variable "queue_visibility_timeout_seconds" {
+  type = number
 }

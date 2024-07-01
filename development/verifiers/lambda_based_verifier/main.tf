@@ -1,10 +1,11 @@
 module "java17_solutions" {
   source = "../../../modules/sqs"
 
-  base_name                    = var.base_name
-  message_delay_period_seconds = var.message_delay_period_seconds
-  env_name                     = var.env_name
-  queue_name                   = var.java17_sqs_queue
+  base_name                        = var.base_name
+  message_delay_period_seconds     = var.message_delay_period_seconds
+  env_name                         = var.env_name
+  queue_name                       = var.java17_sqs_queue
+  queue_visibility_timeout_seconds = var.queue_visibility_timeout_seconds
 }
 
 module "java17_compiler_lambda" {

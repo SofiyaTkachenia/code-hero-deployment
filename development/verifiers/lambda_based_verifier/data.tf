@@ -3,19 +3,19 @@ data "aws_iam_policy_document" "lambda_policy" {
   statement {
     effect    = "Allow"
     actions   = ["s3:PutObject"]
-    resources = [var.s3_put_object_bucket_arn]
+    resources = [var.s3_put_object_bucket_arn, "${var.s3_put_object_bucket_arn}/*"]
   }
 
   statement {
     effect    = "Allow"
     actions   = ["s3:GetObject"]
-    resources = [var.s3_get_object_bucket_arn]
+    resources = [var.s3_get_object_bucket_arn, "${var.s3_get_object_bucket_arn}/*"]
   }
 
   statement {
     effect    = "Allow"
     actions   = ["sqs:DeleteMessage", "sqs:GetQueueAttributes", "sqs:ReceiveMessage"]
-    resources = [var.get_messages_queue_arn]
+    resources = [module.java17_solutions.queue_arn]
   }
 
   statement {
@@ -25,8 +25,20 @@ data "aws_iam_policy_document" "lambda_policy" {
   }
 
   statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:CreateNetworkInterface",
+      "ec2:DeleteNetworkInterface",
+      "ec2:DescribeInstances",
+      "ec2:AttachNetworkInterface"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
     effect    = "Allow"
     actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = [module.java17_compiler_lambda.lambda_cloud_watch_log_group_arn]
+    resources = ["arn:aws:logs:*:*:*"]
   }
 }

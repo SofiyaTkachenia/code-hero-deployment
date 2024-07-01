@@ -161,3 +161,7 @@ variable "vpc_id" {
 variable "container_port" {
   type = number
 }
+
+variable "listener_arn" {
+  type = string
+}

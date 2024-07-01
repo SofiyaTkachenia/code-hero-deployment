@@ -27,14 +27,6 @@ variable "cloud_watch_retention_days" {
   type = number
 }
 
-variable "cluster_arn" {
-  type = string
-}
-
-variable "cluster_id" {
-  type = string
-}
-
 variable "image_uri" {
   type = string
 }
@@ -202,5 +194,13 @@ variable "container_port" {
 }
 
 variable "problem_registry_sqs_queue_arn" {
+  type = string
+}
+
+variable "queue_visibility_timeout_seconds" {
+  type = number
+}
+
+variable "listener_arn" {
   type = string
 }
